@@ -1,0 +1,594 @@
+---
+title: "Text Mining"
+subtitle: "USING TIDY DATA PRINCIPLES"
+author: "Julia Silge"
+format:
+  revealjs: 
+    footer: <https://juliasilge.github.io/asepelt-2024/>
+    theme: [default, custom.scss]
+    preview-links: auto
+    incremental: true
+    width: 1280
+    height: 720
+    title-slide-attributes: 
+      data-background-image: images/don-quixote.png
+      data-background-size: contain
+      data-background-opacity: "0.2"
+knitr:
+  opts_chunk: 
+    echo: true
+    collapse: true
+    comment: "#>"    
+---
+
+```{r}
+#| include: false
+#| file: setup.R
+```
+
+# Hello!
+
+<center>
+
+<img src="https://github.com/juliasilge.png" style="border-radius: 50%;" width="300px"/>
+
+[{{< fa brands github >}} \@juliasilge](https://github.com/juliasilge)
+
+[{{< fa brands mastodon >}} \@juliasilge\@fosstodon.org](https://fosstodon.org/@juliasilge)
+
+[{{< fa brands youtube >}} youtube.com/juliasilge](https://www.youtube.com/juliasilge)
+
+[{{< fa link >}} juliasilge.com](https://juliasilge.com/)
+
+</center>
+
+## Let's install some packages
+
+```{r}
+#| eval: false
+install.packages(c("tidyverse", 
+                   "tidytext",
+                   "stopwords",
+                   "gutenbergr",
+                   "widyr",
+                   "tidygraph",
+                   "tidylo",
+                   "ggraph"))
+```
+
+
+## Text in the real world
+
+
+-   Text data is increasingly important 📚
+
+-   NLP training is scarce on the ground 😱
+
+
+# TIDY DATA PRINCIPLES + TEXT MINING = 🎉
+
+#
+
+![](images/tidytext_repo.png){fig-align="center"}
+
+::: footer
+<https://github.com/juliasilge/tidytext>
+:::
+
+
+#
+
+![](images/cover.png){fig-align="center"}
+
+::: footer
+<https://tidytextmining.com/>
+:::
+
+# {{< fa brands github >}} GitHub repo for workshop:
+
+[github.com/juliasilge/asepelt-2024](https://github.com/juliasilge/asepelt-2024/)
+
+## Plan for this workshop {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+-   EDA for text
+
+-   Modeling for text
+
+
+## What do we mean by tidy text? 
+
+
+```{r}
+text <- c("Dice la tarde: '¡Tengo sed de sombra!'",
+          "Dice la luna: '¡Yo, sed de luceros!'",
+          "La fuente cristalina pide labios",
+          "y suspira el viento.")
+
+text
+```
+
+::: footer
+*Cantos Nuevos* by Federico García Lorca
+:::
+
+## What do we mean by tidy text? 
+
+```{r}
+library(tidyverse)
+
+text_df <- tibble(line = 1:4, text = text)
+
+text_df
+```
+
+::: footer
+*Cantos Nuevos* by Federico García Lorca
+:::
+
+## What do we mean by tidy text? 
+
+```{r}
+#| code-line-numbers: "|4"
+library(tidytext)
+
+text_df |>
+    unnest_tokens(word, text)
+```
+
+::: footer
+*Cantos Nuevos* by Federico García Lorca
+:::
+
+## Gathering more data
+
+You can access the full text of many public domain works from Project Gutenberg using the gutenbergr package.
+
+```{r}
+library(gutenbergr)
+
+full_text <- gutenberg_download(2000, mirror = my_mirror)
+```
+
+What book do *you* want to analyze today? 📖🥳📖
+
+::: aside
+<https://docs.ropensci.org/gutenbergr/>
+:::
+
+## Time to tidy your text!
+
+```{r}
+#| code-line-numbers: "|3"
+tidy_book <- full_text |>
+    mutate(line = row_number()) |>
+    unnest_tokens(word, text)         
+
+glimpse(tidy_book)
+```
+
+## What are the most common words?
+
+What do you predict will happen if we run the following code? 🤔
+
+```{r}
+#| eval: false
+tidy_book |>
+    count(word, sort = TRUE)
+```
+
+## What are the most common words?
+
+What do you predict will happen if we run the following code? 🤔
+
+```{r}
+tidy_book |>
+    count(word, sort = TRUE)
+```
+
+# STOP WORDS 🛑 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+## Stop words
+
+```{r}
+get_stopwords()
+```
+
+## Stop words
+
+```{r}
+get_stopwords(language = "es")
+```
+
+## Stop words
+
+```{r}
+get_stopwords(source = "smart")
+```
+
+## What are the most common words?
+
+[U N S C R A M B L E]{.scramble}
+
+```
+anti_join(get_stopwords(language = "es")) |>
+
+tidy_book |>
+
+count(word, sort = TRUE) |>
+
+geom_col()
+
+slice_max(n, n = 20) |>
+
+ggplot(aes(n, fct_reorder(word, n))) + 
+```
+
+## What are the most common words?
+
+```{r, eval = FALSE}
+#| eval: false
+#| code-line-numbers: "|5"
+tidy_book |>
+    anti_join(get_stopwords(language = "es")) |>
+    count(word, sort = TRUE) |>
+    slice_max(n, n = 20) |>
+    ggplot(aes(n, fct_reorder(word, n))) +  
+    geom_col()
+```
+
+##
+
+```{r}
+#| echo: false
+#| fig-width: 7
+#| fig-align: center
+tidy_book |>
+    anti_join(get_stopwords(language = "es")) |>
+    count(word, sort = TRUE) |>
+    slice_max(n, n = 20) |>
+    ggplot(aes(n, fct_reorder(word, n))) +
+    geom_col(fill = "#3D9970", alpha = 0.9) +
+    scale_x_continuous(expand = c(0,0)) +
+    labs(y = NULL, x = "Number of occurrences")
+```
+
+##  {background-image="images/tilecounts-1.png" background-size="60%"}
+
+::: footer
+:::
+
+##  {background-image="images/tilerate-1.png" background-size="60%"}
+
+::: footer
+:::
+
+# WHAT IS A DOCUMENT ABOUT? 🤔 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+## What is a document about?
+
+-   Term frequency
+-   Inverse document frequency
+
+. . .
+
+$$idf(\text{term}) = \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)}$$
+
+. . .
+
+### tf-idf is about comparing *documents* within a *collection*.
+
+## Understanding tf-idf
+
+Make a collection (*corpus*) for yourself! 💅
+
+```{r}
+full_collection <-
+  gutenberg_download(
+    c(2000, 49836, 56451),
+    meta_fields = "title",
+    mirror = my_mirror
+  )
+```
+
+## Understanding tf-idf
+
+Make a collection (*corpus*) for yourself! 💅
+
+```{r}
+full_collection
+```
+
+## Counting word frequencies
+
+```{r}
+#| code-line-numbers: "|5"
+book_words <- full_collection |>
+    unnest_tokens(word, text) |>
+    count(title, word, sort = TRUE)
+
+book_words  
+```
+
+What do the columns of `book_words` tell us?
+
+## Calculating tf-idf
+
+```{r}
+#| code-line-numbers: "|2"
+book_tf_idf <- book_words |>
+    bind_tf_idf(word, title, n)  
+```
+
+## Calculating tf-idf
+
+```{r}
+book_tf_idf
+```
+
+. . .
+
+That's... super exciting???
+
+## Calculating tf-idf
+
+What do you predict will happen if we run the following code? 🤔
+
+```{r}
+#| eval: false
+book_tf_idf |>
+    arrange(-tf_idf)
+```
+
+## Calculating tf-idf
+
+What do you predict will happen if we run the following code? 🤔
+
+```{r}
+book_tf_idf |>
+    arrange(-tf_idf)
+```
+
+## Calculating tf-idf
+
+[U N S C R A M B L E]{.scramble}
+
+```
+group_by(title) |>
+
+book_tf_idf |>
+
+slice_max(tf_idf, n = 10) |>
+
+ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = title)) +
+
+facet_wrap(vars(title), scales = "free")
+
+geom_col(show.legend = FALSE) +
+```
+
+## Calculating tf-idf
+
+```{r, eval = FALSE}
+#| eval: false
+#| code-line-numbers: "|4"
+book_tf_idf |>
+    group_by(title) |>
+    slice_max(tf_idf, n = 10) |>
+    ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = title)) +
+    geom_col(show.legend = FALSE) +
+    facet_wrap(vars(title), scales = "free")
+```
+
+## 
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+book_tf_idf |>
+    group_by(title) |>
+    slice_max(tf_idf, n = 10) |>
+    ggplot(aes(tf_idf,
+               fct_reorder(word, tf_idf), 
+               fill = title)) +
+    geom_col(alpha = 0.9, show.legend = FALSE) +
+    facet_wrap(~title, scales = "free") +
+    scale_x_continuous(expand = c(0,0)) +
+    labs(y = NULL, x = "tf-idf")
+```
+
+
+# WHAT IS A DOCUMENT ABOUT? 🤔 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+## What is a document about?
+
+-   Term frequency
+-   Inverse document frequency
+
+. . .
+
+### Weighted log odds ⚖️
+
+- Log odds ratio expresses probabilities
+- Weighting helps deal with power law distribution
+
+## Weighted log odds ⚖️
+
+```{r}
+library(tidylo)
+book_words |>
+    bind_log_odds(title, word, n) |>
+    arrange(-log_odds_weighted)
+```
+
+. . .
+
+Weighted log odds can distinguish between words that are used in all texts.
+
+# N-GRAMS... AND BEYOND! 🚀 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+## N-grams... and beyond! 🚀
+
+```{r}
+#| code-line-numbers: "|4"
+full_text <- gutenberg_download(2000, mirror = my_mirror)
+
+tidy_ngram <- full_text |>
+    unnest_tokens(bigram, text, token = "ngrams", n = 2) |> 
+    filter(!is.na(bigram))
+```
+
+## N-grams... and beyond! 🚀
+
+```{r}
+tidy_ngram
+```
+
+## N-grams... and beyond! 🚀
+
+```{r}
+tidy_ngram |>
+    count(bigram, sort = TRUE)
+```
+
+. . .
+
+Can we use an `anti_join()` now to remove the stop words?
+
+## N-grams... and beyond! 🚀
+
+```{r}
+#| code-line-numbers: "|4"
+stop_words_es <- get_stopwords("es")
+
+bigram_counts <- tidy_ngram |>
+    separate(bigram, c("word1", "word2"), sep = " ") |>
+    filter(!word1 %in% stop_words_es$word,
+           !word2 %in% stop_words_es$word) |>
+    count(word1, word2, sort = TRUE)
+```
+
+## N-grams... and beyond! 🚀
+
+```{r}
+bigram_counts
+```
+
+## What can you do with n-grams? {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+::: incremental
+-   tf-idf of n-grams
+-   weighted log odds of n-grams
+-   network analysis
+-   negation
+:::
+
+##  {background-image="images/austen-1.png" background-size="60%"}
+
+::: footer
+:::
+
+##  {background-image="images/slider.gif" background-size="70%"}
+
+::: footer
+<https://pudding.cool/2017/08/screen-direction/>
+:::
+
+##  {background-image="https://juliasilge.github.io/tidylo/articles/tidylo_files/figure-html/bigram_plot-1.png" background-size="70%"}
+
+::: footer
+:::
+
+## {background-image="images/change_overall-1.svg" background-size="70%"}
+
+::: footer
+:::
+
+## Network analysis
+
+```{r}
+#| code-line-numbers: "|7"
+library(widyr)
+library(ggraph)
+library(tidygraph)
+
+bigram_graph <- bigram_counts |>
+    filter(n > 20) |>
+    as_tbl_graph() 
+```
+
+## Network analysis
+
+```{r}
+bigram_graph
+```
+
+## Network analysis
+
+```{r eval = FALSE}
+#| eval: false
+#| code-line-numbers: "|3,4"
+bigram_graph |>
+    ggraph(layout = "kk") +
+    geom_edge_link(aes(edge_alpha = n)) + 
+    geom_node_text(aes(label = name)) +  
+    theme_graph() 
+```
+
+## Network analysis
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|3,8"
+bigram_graph |>
+    ggraph(layout = "kk") +
+    geom_edge_link(aes(edge_alpha = n), 
+                   show.legend = FALSE, 
+                   arrow = arrow(length = unit(1.5, 'mm')), 
+                   start_cap = circle(3, 'mm'),
+                   end_cap = circle(3, 'mm')) +
+    geom_node_text(aes(label = name)) + 
+    theme_graph()
+```
+
+##
+
+```{r}
+#| echo: false
+#| fig-height: 7
+#| fig-width: 9
+#| fig-align: center
+set.seed(2021)
+bigram_graph |>
+    ggraph(layout = "kk") +
+    geom_edge_link(aes(edge_alpha = n), 
+                   show.legend = FALSE, 
+                   arrow = arrow(length = unit(1.5, 'mm')), 
+                   start_cap = circle(3.4, 'mm'),
+                   end_cap = circle(3.3, 'mm')) +
+    geom_node_text(aes(label = name),
+                   size = 4,
+                   family = "IBMPlexSans") +
+    theme_graph()
+```
+
+# Thanks!
+
+<center>
+
+<img src="https://github.com/juliasilge.png" style="border-radius: 50%;" width="300px"/>
+
+[{{< fa brands github >}} \@juliasilge](https://github.com/juliasilge)
+
+[{{< fa brands mastodon >}} \@juliasilge\@fosstodon.org](https://fosstodon.org/@juliasilge)
+
+[{{< fa brands youtube >}} youtube.com/juliasilge](https://www.youtube.com/juliasilge)
+
+[{{< fa link >}} juliasilge.com](https://juliasilge.com/)
+
+</center>
+
+::: footer
+Slides created with [Quarto](https://quarto.org/)
+:::

@@ -1,0 +1,326 @@
+---
+title: "Text Mining"
+subtitle: "USING TIDY DATA PRINCIPLES"
+author: "Julia Silge"
+format:
+  revealjs: 
+    footer: <https://juliasilge.github.io/asepelt-2024/>
+    theme: [default, custom.scss]
+    preview-links: auto
+    incremental: true
+    width: 1280
+    height: 720
+    title-slide-attributes: 
+      data-background-image: images/don-quixote.png
+      data-background-size: contain
+      data-background-opacity: "0.2"
+knitr:
+  opts_chunk: 
+    echo: true
+    collapse: true
+    comment: "#>"
+    R.options:
+      quanteda_print_dfm_max_ndoc: 0
+      quanteda_print_dfm_max_nfeat: 0    
+---
+
+```{r}
+#| include: false
+#| file: setup.R
+```
+
+# Hello!
+
+<center>
+
+<img src="https://github.com/juliasilge.png" style="border-radius: 50%;" width="300px"/>
+
+[{{< fa brands github >}} \@juliasilge](https://github.com/juliasilge)
+
+[{{< fa brands mastodon >}} \@juliasilge\@fosstodon.org](https://fosstodon.org/@juliasilge)
+
+[{{< fa brands youtube >}} youtube.com/juliasilge](https://www.youtube.com/juliasilge)
+
+[{{< fa link >}} juliasilge.com](https://juliasilge.com/)
+
+</center>
+
+## Let's install some packages
+
+```{r}
+#| eval: false
+install.packages(c("tidyverse", 
+                   "tidytext",
+                   "wordsalad")
+```
+
+## Text as data
+
+```{r}
+library(tidyverse)
+
+cheeses <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-06-04/cheeses.csv') |>
+  filter(!is.na(flavor))
+
+glimpse(cheeses)
+```
+
+
+## Text as data
+
+```{r}
+sample(cheeses$flavor, 5)
+```
+
+Cheese data from <https://www.cheese.com/> via [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-06-04/readme.md)
+
+## Text as data
+
+What is a typical way to represent this text data for modeling?
+
+```{r}
+library(tidytext)
+
+dtm <- cheeses |>
+    mutate(id = row_number()) |> 
+    unnest_tokens(word, flavor) |> 
+    anti_join(get_stopwords(), by = "word") |>  
+    count(id, word) |>  
+    bind_tf_idf(word, id, n) |> 
+    cast_dfm(id, word, tf_idf)
+
+dtm
+```
+
+. . .
+
+This representation is incredibly ***sparse***, of ***high dimensionality***, and can have a ***huge number*** of features for natural language.
+
+# Word embeddings 📔 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+# {{< fa quote-left >}}You shall know a word by the company it keeps.{{< fa quote-right >}}
+
+::: footer
+John Rupert Firth
+:::
+
+## Word embeddings, then and now
+
+- word2vec
+- GloVe
+- fastText
+- OpenAI
+- All examples of large language models (LLMs) in general!
+
+. . .
+
+<https://vickiboykis.com/what_are_embeddings/>
+
+## Cheesy embeddings 🧀
+
+```{r}
+library(wordsalad)
+
+flavor_embeddings <- 
+    cheeses |>
+    mutate(flavor = str_remove_all(flavor, ",")) |>
+    pull(flavor) |>
+    glove()
+
+flavor_embeddings
+```
+
+## Cheesy embeddings 🧀
+
+Let's create an overall embedding for each cheese (using `mean()`):
+
+```{r}
+tidy_cheeses <-
+    cheeses |>
+    mutate(cheese_id = row_number()) |>
+    unnest_tokens(word, flavor) |>
+    left_join(flavor_embeddings, by = c("word" = "tokens")) |>
+    group_by(cheese_id, cheese, milk, country, type) |>
+    summarize(across(V1:V10, ~ mean(.x, na.rm = TRUE)), .groups = "drop")
+
+tidy_cheeses
+```
+
+
+## Cheesy similarity 🧀
+
+```{r}
+embeddings_mat <- 
+    tidy_cheeses |> 
+    select(V1:V10)  |> 
+    as.matrix()
+
+row.names(embeddings_mat) <- cheeses$cheese
+embeddings_similarity <- embeddings_mat / sqrt(rowSums(embeddings_mat * embeddings_mat))
+embeddings_similarity <- embeddings_similarity %*% t(embeddings_similarity)
+dim(embeddings_similarity)
+```
+
+. . .
+
+This contains the similarity scores for each cheese flavor compared to each other cheese flavor. 
+
+## Cheesy similarity 🧀
+
+Let’s say we are most interesting in this particular cheese:
+
+[U N S C R A M B L E]{.scramble}
+
+```
+filter(cheese == "Manchego") |> 
+  
+select(cheese, country, flavor)
+
+cheeses |> 
+```
+
+## Cheesy similarity 🧀
+
+Let’s say we are most interesting in this particular cheese:
+
+```{r}
+cheeses |> 
+  filter(cheese == "Manchego") |> 
+  select(cheese, country, flavor)
+```
+
+## Cheesy similarity 🧀
+
+```{r}
+enframe(embeddings_similarity["Manchego",], name = "cheese", value = "similarity") |>
+  arrange(-similarity)
+```
+
+## Cheesy similarity 🧀
+
+```{r}
+cheeses |> 
+  filter(cheese %in% c("Beemster Classic", "Butternut", "Loma Alta")) |> 
+  select(cheese, country, flavor)
+```
+
+## Cheesy similarity 🧀
+
+```{r}
+cheeses |> 
+  filter(cheese %in% c("Bayley Hazen Blue", "Alpha Tolman", "Cuor di burrata")) |> 
+  select(cheese, country, flavor)
+```
+
+## Cheesy similarity 🧀
+
+What about the _least_ similar cheeses to Manchego?
+
+```{r}
+enframe(embeddings_similarity["Manchego",], name = "cheese", value = "similarity") |>
+  arrange(similarity)
+```
+
+## Cheesy similarity 🧀
+
+```{r}
+cheeses |> 
+  filter(cheese %in% c("Bossa", "St Cera", "Minger")) |> 
+  select(cheese, country, flavor)
+```
+
+# How do people use word embeddings? 🤔 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+. . .
+
+<https://vickiboykis.com/what_are_embeddings/>
+
+# 
+
+<center>
+
+{{< video https://www.youtube.com/embed/UsaZV8ROMSc width="960" height="540" >}}
+
+</center>
+
+## Fairness and word embeddings {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+- Embeddings are trained or learned from a large corpus of text data
+
+- Human prejudice or bias in the corpus becomes imprinted into the embeddings
+
+
+## Fairness and word embeddings {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+- African American first names are associated with more unpleasant feelings than European American first names
+
+- Women's first names are more associated with family and men's first names are more associated with career
+
+- Terms associated with women are more associated with the arts and terms associated with men are more associated with science
+
+
+::: footer
+[Caliskan, Bryson, and Narayanan. "Semantics Derived Automatically from Language Corpora Contain Human-Like Biases." Science 356.6334 (2017): 183–186](https://arxiv.org/abs/1608.07187)
+:::
+
+# Bias is so ingrained in word embeddings that they can be used to quantify change in social attitudes over time
+
+::: footer
+[Garg, Nikhil, et al. "Word embeddings quantify 100 years of gender and ethnic stereotypes." Proceedings of the National Academy of Sciences 115.16 (2018): E3635-E3644](https://www.pnas.org/content/115/16/E3635)
+:::
+
+## Biased training data {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+
+- Embeddings are trained or learned from a large corpus of text data
+
+- For example, consider the case of Wikipedia
+
+
+- Wikipedia both reflects social/historical biases ***and*** generates bias
+
+
+::: footer
+[Wagner, Claudia, et al. "Women through the glass ceiling: gender asymmetries in Wikipedia." EPJ Data Science 5.1 (2016): 5](https://link.springer.com/article/10.1140/epjds/s13688-016-0066-4)
+:::
+
+## Can embeddings be debiased? {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+
+- Embeddings can be reprojected to mitigate a specific bias (such as gender bias) using specific sets of words
+
+
+- Training data can be augmented with counterfactuals
+
+
+- Other researchers suggest that fairness corrections occur at a decision
+
+
+- Evidence indicates that debiasing still allows stereotypes to seep back in
+
+
+::: footer
+[Gonen, Hila, and Yoav Goldberg. "Lipstick on a pig: Debiasing methods cover up systematic gender biases in word embeddings but do not remove them." (2019)](https://arxiv.org/abs/1903.03862)
+:::
+
+# Word embeddings in the REAL WORLD {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
+
+# Thanks!
+
+<center>
+
+<img src="https://github.com/juliasilge.png" style="border-radius: 50%;" width="300px"/>
+
+[{{< fa brands github >}} \@juliasilge](https://github.com/juliasilge)
+
+[{{< fa brands mastodon >}} \@juliasilge\@fosstodon.org](https://fosstodon.org/@juliasilge)
+
+[{{< fa brands youtube >}} youtube.com/juliasilge](https://www.youtube.com/juliasilge)
+
+[{{< fa link >}} juliasilge.com](https://juliasilge.com/)
+
+</center>
+
+::: footer
+Slides created with [Quarto](https://quarto.org/)
+:::

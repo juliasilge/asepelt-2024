@@ -1,0 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Libre+Caslon+Text&display=swap);
+
+/*-- scss:defaults --*/
+$font-family-sans-serif: 'IBM Plex Sans', sans-serif;
+$presentation-heading-font: 'Libre Caslon Text', sans-serif;
+
+
+/*-- scss:rules --*/
+
+.scramble {
+    color: #3D9970;
+    font-weight: bold;
+}
+  

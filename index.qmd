@@ -1,0 +1,53 @@
+## Welcome
+
+These are the materials for a workshop on text analysis by [Julia Silge](https://juliasilge.com/) at the [XXXVII CONGRESO INTERNACIONAL ASEPELT](https://www.congresoasepelt.com/programa-cientifico-3) in Elche, Spain on 19 June 2024. Text data is increasingly important in many domains, and tidy data principles and tidy tools can make text mining easier and more effective. In this workshop, learn how to manipulate, summarize, and visualize the characteristics of text using these methods and R packages from the tidy tool ecosystem. These tools are highly effective for many analytical questions and allow analysts to integrate natural language processing into effective workflows already in wide use. Explore how to implement approaches such as measuring tf-idf and log odds, network analysis of words, unsupervised text models, and computing word embeddings.
+
+## Is this workshop for me?
+
+This course will be appropriate for you if you answer yes to these questions:
+
+- Have you ever encountered text data and suspected there was useful insight latent within it but felt frustrated about how to find that insight?
+- Are you familiar with dplyr and ggplot2, and ready to learn how unstructured text data can be analyzed within the [tidyverse](https://www.tidyverse.org/) ecosystem?
+- Do you need a flexible framework for handling text data that allows you to engage in tasks from exploratory data analysis to supervised predictive modeling?
+
+
+## Learning objectives: 
+
+At the end of this workshop, participants will understand how to: 
+
+- Perform exploratory data analyses of text datasets, including summarization and data visualization
+- Understand and implement both tf-idf and weighted log odds
+- Use unsupervised models to gain insight into text data
+- Compute word embeddings for text data
+
+
+## Preparation
+
+Please tune into the workshop with a computer that has the following installed (all available for free):
+
+- A recent version of R, available at <https://cran.r-project.org/>
+- A recent version of RStudio Desktop (RStudio Desktop Open Source License), available at <https://posit.co/download/rstudio-desktop/>
+- The following R packages, which you can install by connecting to the internet, opening RStudio, and running in the R console:
+
+```{r}
+#| eval: false
+install.packages(c("tidyverse", "tidytext", 
+                   "gutenbergr", "stopwords",
+                   "tidylo", "widyr",
+                   "tidygraph", "ggraph",
+                   "stm", "wordsalad"))
+```
+
+## Slides
+
+- 01: [Text as tidy data](slides/01-tidytext.html)
+- 02: [Unsupervised machine learning](slides/02-machine-learning.html)
+- 03: [Word embeddings](slides/03-embeddings.html)
+
+## Code
+
+Quarto files for working along [are available on GitHub](https://github.com/juliasilge/asepelt-2024/tree/master/code).
+
+## Instructor bio
+
+Julia Silge is a data scientist and engineering manager at [Posit PBC](https://posit.co/) (formerly RStudio), where she leads a team of developers building fluent, cohesive open source software for data science in Python and R. She is an author, an international keynote speaker, and a real-world practitioner focusing on data analysis and machine learning. Julia loves text analysis, making beautiful charts, and communicating about technical topics with diverse audiences.
