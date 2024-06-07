@@ -94,7 +94,9 @@ dtm
 
 . . .
 
+::: {.callout-tip}
 This representation is incredibly ***sparse***, of ***high dimensionality***, and can have a ***huge number*** of features for natural language.
+:::
 
 # Word embeddings 📔 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
 
@@ -163,7 +165,9 @@ dim(embeddings_similarity)
 
 . . .
 
+::: {.callout-tip}
 This contains the similarity scores for each cheese flavor compared to each other cheese flavor. 
+:::
 
 ## Cheesy similarity 🧀
 

@@ -720,7 +720,19 @@ ggplot(aes(n, fct_reorder(word, n))) + </code></pre>
 <p><span class="math display">\[idf(\text{term}) = \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)}\]</span></p>
 </div>
 <div class="fragment">
-<h3 id="tf-idf-is-about-comparing-documents-within-a-collection.">tf-idf is about comparing <em>documents</em> within a <em>collection</em>.</h3>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>tf-idf is about comparing <em>documents</em> within a <em>collection</em>.</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="understanding-tf-idf" class="slide level2">
@@ -779,7 +791,21 @@ ggplot(aes(n, fct_reorder(word, n))) + </code></pre>
 <span id="cb16-18"><a></a><span class="co">#&gt; 10 Don Quijote se     4752</span></span>
 <span id="cb16-19"><a></a><span class="co">#&gt; # ℹ 44,616 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
 <p>What do the columns of <code>book_words</code> tell us?</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="calculating-tf-idf" class="slide level2">
 <h2>Calculating tf-idf</h2>
@@ -808,7 +834,19 @@ ggplot(aes(n, fct_reorder(word, n))) + </code></pre>
 <span id="cb18-15"><a></a><span class="co">#&gt; # ℹ 44,616 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
 <p>That’s… super exciting???</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="calculating-tf-idf-2" class="slide level2">
@@ -913,7 +951,19 @@ geom_col(show.legend = FALSE) +</code></pre>
 <span id="cb23-18"><a></a><span class="co">#&gt; # ℹ 44,616 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
 <p>Weighted log odds can distinguish between words that are used in all texts.</p>
+</div>
+</div>
+</div>
 </div>
 </section></section>
 <section>
@@ -972,7 +1022,19 @@ geom_col(show.legend = FALSE) +</code></pre>
 <span id="cb26-16"><a></a><span class="co">#&gt; # ℹ 140,656 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
 <p>Can we use an <code>anti_join()</code> now to remove the stop words?</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="n-grams-and-beyond-4" class="slide level2">

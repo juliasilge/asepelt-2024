@@ -109,7 +109,7 @@
     "href": "slides/01-tidytext.html#what-is-a-document-about-1",
     "title": "Text Mining",
     "section": "What is a document about?",
-    "text": "What is a document about?\n\nTerm frequency\nInverse document frequency\n\n\n\\[idf(\\text{term}) = \\ln{\\left(\\frac{n_{\\text{documents}}}{n_{\\text{documents containing term}}}\\right)}\\]\n\n\ntf-idf is about comparing documents within a collection."
+    "text": "What is a document about?\n\nTerm frequency\nInverse document frequency\n\n\n\\[idf(\\text{term}) = \\ln{\\left(\\frac{n_{\\text{documents}}}{n_{\\text{documents containing term}}}\\right)}\\]\n\n\n\n\n\n\n\n\nTip\n\n\ntf-idf is about comparing documents within a collection."
   },
   {
     "objectID": "slides/01-tidytext.html#understanding-tf-idf",
@@ -130,7 +130,7 @@
     "href": "slides/01-tidytext.html#counting-word-frequencies",
     "title": "Text Mining",
     "section": "Counting word frequencies",
-    "text": "Counting word frequencies\n\nbook_words &lt;- full_collection |&gt;\n    unnest_tokens(word, text) |&gt;\n    count(title, word, sort = TRUE)\n\nbook_words  \n#&gt; # A tibble: 44,626 × 3\n#&gt;    title       word      n\n#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;\n#&gt;  1 Don Quijote que   20769\n#&gt;  2 Don Quijote de    18410\n#&gt;  3 Don Quijote y     18272\n#&gt;  4 Don Quijote la    10492\n#&gt;  5 Don Quijote a      9875\n#&gt;  6 Don Quijote en     8285\n#&gt;  7 Don Quijote el     8265\n#&gt;  8 Don Quijote no     6346\n#&gt;  9 Don Quijote los    4769\n#&gt; 10 Don Quijote se     4752\n#&gt; # ℹ 44,616 more rows\n\nWhat do the columns of book_words tell us?"
+    "text": "Counting word frequencies\n\nbook_words &lt;- full_collection |&gt;\n    unnest_tokens(word, text) |&gt;\n    count(title, word, sort = TRUE)\n\nbook_words  \n#&gt; # A tibble: 44,626 × 3\n#&gt;    title       word      n\n#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;\n#&gt;  1 Don Quijote que   20769\n#&gt;  2 Don Quijote de    18410\n#&gt;  3 Don Quijote y     18272\n#&gt;  4 Don Quijote la    10492\n#&gt;  5 Don Quijote a      9875\n#&gt;  6 Don Quijote en     8285\n#&gt;  7 Don Quijote el     8265\n#&gt;  8 Don Quijote no     6346\n#&gt;  9 Don Quijote los    4769\n#&gt; 10 Don Quijote se     4752\n#&gt; # ℹ 44,616 more rows\n\n\n\n\n\n\n\n\nTip\n\n\nWhat do the columns of book_words tell us?"
   },
   {
     "objectID": "slides/01-tidytext.html#calculating-tf-idf",
@@ -144,7 +144,7 @@
     "href": "slides/01-tidytext.html#calculating-tf-idf-1",
     "title": "Text Mining",
     "section": "Calculating tf-idf",
-    "text": "Calculating tf-idf\n\nbook_tf_idf\n#&gt; # A tibble: 44,626 × 6\n#&gt;    title       word      n     tf   idf tf_idf\n#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 Don Quijote que   20769 0.0541     0      0\n#&gt;  2 Don Quijote de    18410 0.0480     0      0\n#&gt;  3 Don Quijote y     18272 0.0476     0      0\n#&gt;  4 Don Quijote la    10492 0.0273     0      0\n#&gt;  5 Don Quijote a      9875 0.0257     0      0\n#&gt;  6 Don Quijote en     8285 0.0216     0      0\n#&gt;  7 Don Quijote el     8265 0.0215     0      0\n#&gt;  8 Don Quijote no     6346 0.0165     0      0\n#&gt;  9 Don Quijote los    4769 0.0124     0      0\n#&gt; 10 Don Quijote se     4752 0.0124     0      0\n#&gt; # ℹ 44,616 more rows\n\n\nThat’s… super exciting???"
+    "text": "Calculating tf-idf\n\nbook_tf_idf\n#&gt; # A tibble: 44,626 × 6\n#&gt;    title       word      n     tf   idf tf_idf\n#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 Don Quijote que   20769 0.0541     0      0\n#&gt;  2 Don Quijote de    18410 0.0480     0      0\n#&gt;  3 Don Quijote y     18272 0.0476     0      0\n#&gt;  4 Don Quijote la    10492 0.0273     0      0\n#&gt;  5 Don Quijote a      9875 0.0257     0      0\n#&gt;  6 Don Quijote en     8285 0.0216     0      0\n#&gt;  7 Don Quijote el     8265 0.0215     0      0\n#&gt;  8 Don Quijote no     6346 0.0165     0      0\n#&gt;  9 Don Quijote los    4769 0.0124     0      0\n#&gt; 10 Don Quijote se     4752 0.0124     0      0\n#&gt; # ℹ 44,616 more rows\n\n\n\n\n\n\n\n\nTip\n\n\nThat’s… super exciting???"
   },
   {
     "objectID": "slides/01-tidytext.html#calculating-tf-idf-2",
@@ -186,7 +186,7 @@
     "href": "slides/01-tidytext.html#weighted-log-odds-1",
     "title": "Text Mining",
     "section": "Weighted log odds ⚖️",
-    "text": "Weighted log odds ⚖️\n\nlibrary(tidylo)\nbook_words |&gt;\n    bind_log_odds(title, word, n) |&gt;\n    arrange(-log_odds_weighted)\n#&gt; # A tibble: 44,626 × 4\n#&gt;    title                                  word         n log_odds_weighted\n#&gt;    &lt;chr&gt;                                  &lt;chr&gt;    &lt;int&gt;             &lt;dbl&gt;\n#&gt;  1 \"Niebla (Nivola)\"                      eugenia    231              20.7\n#&gt;  2 \"Niebla (Nivola)\"                      usted      376              20.2\n#&gt;  3 \"Niebla (Nivola)\"                      augusto    372              14.8\n#&gt;  4 \"El Payador, Vol. I\\nHijo de la Pampa\" la        3895              14.7\n#&gt;  5 \"Don Quijote\"                          panza      352              14.3\n#&gt;  6 \"El Payador, Vol. I\\nHijo de la Pampa\" gaucho     124              14.3\n#&gt;  7 \"Don Quijote\"                          dulcinea   286              12.9\n#&gt;  8 \"Niebla (Nivola)\"                      no        1541              12.5\n#&gt;  9 \"El Payador, Vol. I\\nHijo de la Pampa\" poema       89              12.1\n#&gt; 10 \"Don Quijote\"                          escudero   249              12.1\n#&gt; # ℹ 44,616 more rows\n\n\nWeighted log odds can distinguish between words that are used in all texts."
+    "text": "Weighted log odds ⚖️\n\nlibrary(tidylo)\nbook_words |&gt;\n    bind_log_odds(title, word, n) |&gt;\n    arrange(-log_odds_weighted)\n#&gt; # A tibble: 44,626 × 4\n#&gt;    title                                  word         n log_odds_weighted\n#&gt;    &lt;chr&gt;                                  &lt;chr&gt;    &lt;int&gt;             &lt;dbl&gt;\n#&gt;  1 \"Niebla (Nivola)\"                      eugenia    231              20.7\n#&gt;  2 \"Niebla (Nivola)\"                      usted      376              20.2\n#&gt;  3 \"Niebla (Nivola)\"                      augusto    372              14.8\n#&gt;  4 \"El Payador, Vol. I\\nHijo de la Pampa\" la        3895              14.7\n#&gt;  5 \"Don Quijote\"                          panza      352              14.3\n#&gt;  6 \"El Payador, Vol. I\\nHijo de la Pampa\" gaucho     124              14.3\n#&gt;  7 \"Don Quijote\"                          dulcinea   286              12.9\n#&gt;  8 \"Niebla (Nivola)\"                      no        1541              12.5\n#&gt;  9 \"El Payador, Vol. I\\nHijo de la Pampa\" poema       89              12.1\n#&gt; 10 \"Don Quijote\"                          escudero   249              12.1\n#&gt; # ℹ 44,616 more rows\n\n\n\n\n\n\n\n\nTip\n\n\nWeighted log odds can distinguish between words that are used in all texts."
   },
   {
     "objectID": "slides/01-tidytext.html#n-grams-and-beyond-1",
@@ -207,7 +207,7 @@
     "href": "slides/01-tidytext.html#n-grams-and-beyond-3",
     "title": "Text Mining",
     "section": "N-grams… and beyond! 🚀",
-    "text": "N-grams… and beyond! 🚀\n\ntidy_ngram |&gt;\n    count(bigram, sort = TRUE)\n#&gt; # A tibble: 140,666 × 2\n#&gt;    bigram          n\n#&gt;    &lt;chr&gt;       &lt;int&gt;\n#&gt;  1 de la        2092\n#&gt;  2 don quijote  2061\n#&gt;  3 lo que       1506\n#&gt;  4 que no       1238\n#&gt;  5 de los        941\n#&gt;  6 en la         924\n#&gt;  7 en el         920\n#&gt;  8 a la          887\n#&gt;  9 de su         880\n#&gt; 10 que se        870\n#&gt; # ℹ 140,656 more rows\n\n\nCan we use an anti_join() now to remove the stop words?"
+    "text": "N-grams… and beyond! 🚀\n\ntidy_ngram |&gt;\n    count(bigram, sort = TRUE)\n#&gt; # A tibble: 140,666 × 2\n#&gt;    bigram          n\n#&gt;    &lt;chr&gt;       &lt;int&gt;\n#&gt;  1 de la        2092\n#&gt;  2 don quijote  2061\n#&gt;  3 lo que       1506\n#&gt;  4 que no       1238\n#&gt;  5 de los        941\n#&gt;  6 en la         924\n#&gt;  7 en el         920\n#&gt;  8 a la          887\n#&gt;  9 de su         880\n#&gt; 10 que se        870\n#&gt; # ℹ 140,656 more rows\n\n\n\n\n\n\n\n\nTip\n\n\nCan we use an anti_join() now to remove the stop words?"
   },
   {
     "objectID": "slides/01-tidytext.html#n-grams-and-beyond-4",
@@ -291,7 +291,7 @@
     "href": "slides/03-embeddings.html#text-as-data-2",
     "title": "Text Mining",
     "section": "Text as data",
-    "text": "Text as data\nWhat is a typical way to represent this text data for modeling?\n\nlibrary(tidytext)\n\ndtm &lt;- cheeses |&gt;\n    mutate(id = row_number()) |&gt; \n    unnest_tokens(word, flavor) |&gt; \n    anti_join(get_stopwords(), by = \"word\") |&gt;  \n    count(id, word) |&gt;  \n    bind_tf_idf(word, id, n) |&gt; \n    cast_dfm(id, word, tf_idf)\n\ndtm\n#&gt; Document-feature matrix of: 1,089 documents, 46 features (94.37% sparse) and 0 docvars.\n\n\nThis representation is incredibly sparse, of high dimensionality, and can have a huge number of features for natural language."
+    "text": "Text as data\nWhat is a typical way to represent this text data for modeling?\n\nlibrary(tidytext)\n\ndtm &lt;- cheeses |&gt;\n    mutate(id = row_number()) |&gt; \n    unnest_tokens(word, flavor) |&gt; \n    anti_join(get_stopwords(), by = \"word\") |&gt;  \n    count(id, word) |&gt;  \n    bind_tf_idf(word, id, n) |&gt; \n    cast_dfm(id, word, tf_idf)\n\ndtm\n#&gt; Document-feature matrix of: 1,089 documents, 46 features (94.37% sparse) and 0 docvars.\n\n\n\n\n\n\n\n\nTip\n\n\nThis representation is incredibly sparse, of high dimensionality, and can have a huge number of features for natural language."
   },
   {
     "objectID": "slides/03-embeddings.html#word-embeddings-then-and-now",
@@ -319,7 +319,7 @@
     "href": "slides/03-embeddings.html#cheesy-similarity",
     "title": "Text Mining",
     "section": "Cheesy similarity 🧀",
-    "text": "Cheesy similarity 🧀\n\nembeddings_mat &lt;- \n    tidy_cheeses |&gt; \n    select(V1:V10)  |&gt; \n    as.matrix()\n\nrow.names(embeddings_mat) &lt;- cheeses$cheese\nembeddings_similarity &lt;- embeddings_mat / sqrt(rowSums(embeddings_mat * embeddings_mat))\nembeddings_similarity &lt;- embeddings_similarity %*% t(embeddings_similarity)\ndim(embeddings_similarity)\n#&gt; [1] 1089 1089\n\n\nThis contains the similarity scores for each cheese flavor compared to each other cheese flavor."
+    "text": "Cheesy similarity 🧀\n\nembeddings_mat &lt;- \n    tidy_cheeses |&gt; \n    select(V1:V10)  |&gt; \n    as.matrix()\n\nrow.names(embeddings_mat) &lt;- cheeses$cheese\nembeddings_similarity &lt;- embeddings_mat / sqrt(rowSums(embeddings_mat * embeddings_mat))\nembeddings_similarity &lt;- embeddings_similarity %*% t(embeddings_similarity)\ndim(embeddings_similarity)\n#&gt; [1] 1089 1089\n\n\n\n\n\n\n\n\nTip\n\n\nThis contains the similarity scores for each cheese flavor compared to each other cheese flavor."
   },
   {
     "objectID": "slides/03-embeddings.html#cheesy-similarity-1",
@@ -494,14 +494,14 @@
     "href": "slides/02-topic-modeling.html#can-we-put-them-back-together",
     "title": "Text Mining",
     "section": "Can we put them back together?",
-    "text": "Can we put them back together?\n\nlibrary(tidytext)\n\nword_counts &lt;- books_by_document |&gt;\n    unnest_tokens(word, text) |&gt; \n    anti_join(get_stopwords(source = \"smart\")) |&gt;\n    count(document, word, sort = TRUE)\n\nglimpse(word_counts)\n#&gt; Rows: 81,289\n#&gt; Columns: 3\n#&gt; $ document &lt;chr&gt; \"The Wonderful Wizard of Oz_4\", \"Emma_0\", \"Emma_7\", \"Emma_2\",…\n#&gt; $ word     &lt;chr&gt; \"green\", \"chapter\", \"mr\", \"mr\", \"dorothy\", \"mr\", \"mr\", \"mr\", …\n#&gt; $ n        &lt;int&gt; 61, 57, 56, 54, 53, 52, 51, 50, 49, 48, 47, 46, 44, 44, 43, 4…\n\n\nThe dataset word_counts contains the counts of words per line."
+    "text": "Can we put them back together?\n\nlibrary(tidytext)\n\nword_counts &lt;- books_by_document |&gt;\n    unnest_tokens(word, text) |&gt; \n    anti_join(get_stopwords(source = \"smart\")) |&gt;\n    count(document, word, sort = TRUE)\n\nglimpse(word_counts)\n#&gt; Rows: 81,289\n#&gt; Columns: 3\n#&gt; $ document &lt;chr&gt; \"The Wonderful Wizard of Oz_4\", \"Emma_0\", \"Emma_7\", \"Emma_2\",…\n#&gt; $ word     &lt;chr&gt; \"green\", \"chapter\", \"mr\", \"mr\", \"dorothy\", \"mr\", \"mr\", \"mr\", …\n#&gt; $ n        &lt;int&gt; 61, 57, 56, 54, 53, 52, 51, 50, 49, 48, 47, 46, 44, 44, 43, 4…\n\n\n\n\n\n\n\n\nTip\n\n\nThe dataset word_counts contains the counts of words per line."
   },
   {
     "objectID": "slides/02-topic-modeling.html#can-we-put-them-back-together-1",
     "href": "slides/02-topic-modeling.html#can-we-put-them-back-together-1",
     "title": "Text Mining",
     "section": "Can we put them back together?",
-    "text": "Can we put them back together?\n\nwords_sparse &lt;- word_counts |&gt;\n    cast_sparse(document, word, n)\n\nclass(words_sparse)\n#&gt; [1] \"dgCMatrix\"\n#&gt; attr(,\"package\")\n#&gt; [1] \"Matrix\"\ndim(words_sparse)\n#&gt; [1]    81 15067\n\n\nIs words_sparse a tidy dataset?"
+    "text": "Can we put them back together?\n\nwords_sparse &lt;- word_counts |&gt;\n    cast_sparse(document, word, n)\n\nclass(words_sparse)\n#&gt; [1] \"dgCMatrix\"\n#&gt; attr(,\"package\")\n#&gt; [1] \"Matrix\"\ndim(words_sparse)\n#&gt; [1]    81 15067\n\n\n\n\n\n\n\n\nTip\n\n\nIs words_sparse a tidy dataset?"
   },
   {
     "objectID": "slides/02-topic-modeling.html#train-a-topic-model",

@@ -70,7 +70,9 @@ install.packages(c("tidyverse",
 
 . . .
 
+::: {.callout-tip}
 Topic modeling is an example of _unsupervised_ machine learning.
+:::
 
 ##  {background-image="images/top_tags-1.png" background-size="60%" background-color="white"}
 
@@ -137,7 +139,9 @@ glimpse(word_counts)
 
 . . .
 
+::: {.callout-tip}
 The dataset `word_counts` contains the counts of words per line.
+:::
 
 ## Can we put them back together?
 
@@ -152,7 +156,9 @@ dim(words_sparse)
 
 . . .
 
+::: {.callout-tip}
 Is `words_sparse` a tidy dataset?
+:::
 
 ## Train a topic model
 

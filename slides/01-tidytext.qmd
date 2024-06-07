@@ -275,7 +275,10 @@ $$idf(\text{term}) = \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents co
 
 . . .
 
-### tf-idf is about comparing *documents* within a *collection*.
+::: {.callout-tip}
+tf-idf is about comparing *documents* within a *collection*.
+:::
+
 
 ## Understanding tf-idf
 
@@ -309,7 +312,11 @@ book_words <- full_collection |>
 book_words  
 ```
 
+. . .
+
+::: {.callout-tip}
 What do the columns of `book_words` tell us?
+:::
 
 ## Calculating tf-idf
 
@@ -327,7 +334,9 @@ book_tf_idf
 
 . . .
 
+::: {.callout-tip}
 That's... super exciting???
+:::
 
 ## Calculating tf-idf
 
@@ -424,7 +433,9 @@ book_words |>
 
 . . .
 
+::: {.callout-tip}
 Weighted log odds can distinguish between words that are used in all texts.
+:::
 
 # N-GRAMS... AND BEYOND! 🚀 {background-image="images/don-quixote.png" background-size="contain" background-opacity="0.2"}
 
@@ -454,7 +465,9 @@ tidy_ngram |>
 
 . . .
 
+::: {.callout-tip}
 Can we use an `anti_join()` now to remove the stop words?
+:::
 
 ## N-grams... and beyond! 🚀
 
