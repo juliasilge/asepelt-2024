@@ -23,7 +23,9 @@ At the end of this workshop, participants will understand how to:
 
 ## Preparation
 
-Please tune into the workshop with a computer that has the following installed (all available for free):
+Please create a [Posit Cloud](https://posit.cloud/) account ahead of time, to use a workspace that will be available to you during the workshop. The [free tier](https://posit.cloud/plans) will be adequate for our workshop. Do remember to bring your laptop to work along!
+
+Alternatively, if you prefer to work locally, please tune into the workshop with a computer that has the following installed (all available for free):
 
 - A recent version of R, available at <https://cran.r-project.org/>
 - A recent version of RStudio Desktop (RStudio Desktop Open Source License), available at <https://posit.co/download/rstudio-desktop/>
