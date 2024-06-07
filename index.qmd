@@ -43,7 +43,7 @@ install.packages(c("tidyverse", "tidytext",
 ## Slides
 
 - 01: [Text as tidy data](slides/01-tidytext.html)
-- 02: [Unsupervised machine learning](slides/02-machine-learning.html)
+- 02: [Topic modeling](slides/02-topic-modeling.html)
 - 03: [Word embeddings](slides/03-embeddings.html)
 
 ## Code

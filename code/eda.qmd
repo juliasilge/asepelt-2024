@@ -1,0 +1,215 @@
+---
+title: "Text mining with tidy data principles: exploratory data analysis"
+author: "Julia Silge"
+output: html_document
+---
+
+```{r}
+#| include: false
+my_mirror <- "http://mirrors.xmission.com/gutenberg/"
+```
+
+## Access the full text of one book
+
+What book do *you* want to analyze today?
+
+If you like, replace `2000` below with your own choice:
+https://www.gutenberg.org/browse/scores/top
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(gutenbergr)
+
+full_text <- gutenberg_download(2000)
+```
+
+Now it's time to tokenize and tidy this text data.
+
+```{r}
+tidy_book <- full_text |>
+  mutate(line = row_number()) |>
+  _____
+
+tidy_book
+```
+
+What do you predict will happen if we run the following code?
+
+**PREDICT WITH YOUR NEIGHBOR BEFORE YOU RUN**
+
+```{r}
+tidy_book |>
+  count(___)
+```
+
+## Stop words
+
+
+```{r}
+get_stopwords()
+```
+
+Try out some
+
+- different languages (`language`)
+- different sources (`source`)
+
+## What are the most common words?
+
+**U N S C R A M B L E**
+
+```{r}
+anti_join(get_stopwords(language = "es")) |>
+
+tidy_book |>
+
+count(word, sort = TRUE) |>
+
+geom_col()
+
+slice_max(n, n = 20) |>
+
+ggplot(aes(n, fct_reorder(word, n))) +  
+```
+
+
+## Term frequency and inverse document frequency
+
+Go back to Project Gutenberg and make a collection (*corpus*) for yourself!
+
+```{r}
+full_collection <- gutenberg_download(c(2000, 49836, 56451),
+                                      meta_fields = "title",
+                                      mirror = my_mirror)
+
+full_collection
+```
+
+Count word frequencies in your collection.
+
+```{r}
+book_words <- full_collection |>
+  ___
+  count(title, word, sort = TRUE)
+
+book_words
+```
+
+Calculate tf-idf.
+
+```{r}
+book_tf_idf <- book_words |>
+  ___
+
+book_tf_idf
+```
+
+What do you predict will happen if we run the following code?
+
+**PREDICT WITH YOUR NEIGHBOR BEFORE YOU RUN**
+
+
+```{r}
+book_tf_idf |>
+  ___
+```
+
+**U N S C R A M B L E**
+
+```{r}
+group_by(title) |>
+
+book_tf_idf |>
+
+slice_max(tf_idf, n = 10) |>
+
+ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = title)) +
+
+facet_wrap(~title, scales = "free")
+
+geom_col(show.legend = FALSE) +
+```
+
+Weighted log odds is another approach for measuring what a document is about.
+
+```{r}
+library(tidylo)
+
+book_words |>
+    ___(title, word, n) |>
+    arrange(-log_odds_weighted)
+```
+
+## N-grams... and BEYOND
+
+```{r}
+tidy_ngram <- full_text |>
+  unnest_tokens(___)
+
+tidy_ngram
+```
+
+What are the most common bigrams?
+
+```{r}
+tidy_ngram |>
+  ___
+```
+
+Let's use `separate()` from tidyr to remove stop words.
+
+```{r}
+stop_words_es <- get_stopwords("es")
+
+bigram_counts <- tidy_ngram |>
+  ___
+  filter(!word1 %in% stop_words_es$word,
+         !word2 %in% stop_words_es$word) |>
+  count(word1, word2, sort = TRUE)
+
+bigram_counts
+```
+
+## Network analysis
+
+Create a word network from bigrams!
+
+```{r}
+library(widyr)
+library(ggraph)
+library(tidygraph)
+
+bigram_graph <- bigram_counts |>
+  filter(n > 20) |>
+  ___
+
+bigram_graph
+```
+
+Visualize the network.
+
+```{r}
+bigram_graph |>
+  ggraph(layout = "kk") +
+  geom_edge_link(___) + 
+  geom_node_text(___) +    
+  theme_graph() 
+```
+
+
+Lots of ways to make the graph nicer!
+
+```{r}
+bigram_graph |>
+  ggraph(layout = "kk") +
+  geom_edge_link(___,
+                 show.legend = FALSE, 
+                 arrow = arrow(length = unit(1.5, 'mm')), 
+                 start_cap = circle(3, 'mm'),
+                 end_cap = circle(3, 'mm')) + 
+  geom_node_text(___) +    
+  theme_graph() 
+```
+
+Thanks for joining! <3

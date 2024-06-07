@@ -144,7 +144,7 @@
     "href": "slides/01-tidytext.html#calculating-tf-idf-1",
     "title": "Text Mining",
     "section": "Calculating tf-idf",
-    "text": "Calculating tf-idf\n\nbook_tf_idf\n#&gt; # A tibble: 44,626 × 6\n#&gt;    title       word      n     tf   idf tf_idf\n#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 Don Quijote que   20769 0.0541     0      0\n#&gt;  2 Don Quijote de    18410 0.0480     0      0\n#&gt;  3 Don Quijote y     18272 0.0476     0      0\n#&gt;  4 Don Quijote la    10492 0.0273     0      0\n#&gt;  5 Don Quijote a      9875 0.0257     0      0\n#&gt;  6 Don Quijote en     8285 0.0216     0      0\n#&gt;  7 Don Quijote el     8265 0.0215     0      0\n#&gt;  8 Don Quijote no     6346 0.0165     0      0\n#&gt;  9 Don Quijote los    4769 0.0124     0      0\n#&gt; 10 Don Quijote se     4752 0.0124     0      0\n#&gt; # ℹ 44,616 more rows\n\n\n\n\n\n\n\n\nTip\n\n\nThat’s… super exciting???"
+    "text": "Calculating tf-idf\n\nbook_tf_idf\n#&gt; # A tibble: 44,626 × 6\n#&gt;    title       word      n     tf   idf tf_idf\n#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 Don Quijote que   20769 0.0541     0      0\n#&gt;  2 Don Quijote de    18410 0.0480     0      0\n#&gt;  3 Don Quijote y     18272 0.0476     0      0\n#&gt;  4 Don Quijote la    10492 0.0273     0      0\n#&gt;  5 Don Quijote a      9875 0.0257     0      0\n#&gt;  6 Don Quijote en     8285 0.0216     0      0\n#&gt;  7 Don Quijote el     8265 0.0215     0      0\n#&gt;  8 Don Quijote no     6346 0.0165     0      0\n#&gt;  9 Don Quijote los    4769 0.0124     0      0\n#&gt; 10 Don Quijote se     4752 0.0124     0      0\n#&gt; # ℹ 44,616 more rows\n\n\nThat’s… super exciting??? 🥴"
   },
   {
     "objectID": "slides/01-tidytext.html#calculating-tf-idf-2",
@@ -438,7 +438,7 @@
     "href": "index.html#slides",
     "title": "Text Mining with Tidy Data Principles",
     "section": "Slides",
-    "text": "Slides\n\n01: Text as tidy data\n02: Unsupervised machine learning\n03: Word embeddings"
+    "text": "Slides\n\n01: Text as tidy data\n02: Topic modeling\n03: Word embeddings"
   },
   {
     "objectID": "index.html#code",

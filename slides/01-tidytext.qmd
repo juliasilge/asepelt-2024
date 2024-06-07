@@ -334,9 +334,7 @@ book_tf_idf
 
 . . .
 
-::: {.callout-tip}
-That's... super exciting???
-:::
+That's... super exciting??? 🥴
 
 ## Calculating tf-idf
 

@@ -533,7 +533,7 @@ Julia Silge
 <section id="cheesy-embeddings" class="slide level2">
 <h2>Cheesy embeddings 🧀</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(wordsalad)</span>
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(wordsalad)</span>
 <span id="cb5-2"><a></a></span>
 <span id="cb5-3"><a></a>flavor_embeddings <span class="ot">&lt;-</span> </span>
 <span id="cb5-4"><a></a>    cheeses <span class="sc">|&gt;</span></span>
@@ -563,7 +563,7 @@ Julia Silge
 <h2>Cheesy embeddings 🧀</h2>
 <p>Let’s create an overall embedding for each cheese (using <code>mean()</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>tidy_cheeses <span class="ot">&lt;-</span></span>
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>tidy_cheeses <span class="ot">&lt;-</span></span>
 <span id="cb6-2"><a></a>    cheeses <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a></a>    <span class="fu">mutate</span>(<span class="at">cheese_id =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb6-4"><a></a>    <span class="fu">unnest_tokens</span>(word, flavor) <span class="sc">|&gt;</span></span>

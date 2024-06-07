@@ -1,0 +1,136 @@
+---
+title: "Text mining with tidy data principles: topic modeling"
+author: "Julia Silge"
+output: html_document
+---
+
+## Download data
+
+First download data to use for our embeddings:
+
+```{r}
+library(tidyverse)
+
+cheeses <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-06-04/cheeses.csv') |>
+  filter(!is.na(flavor))
+
+glimpse(cheeses)
+```
+
+So many cheeses!
+
+```{r}
+sample(cheeses$flavor, 10)
+```
+
+Cheese data from <https://www.cheese.com/> via [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-06-04/readme.md)
+
+
+What do you predict will happen if we run the following code?
+
+**PREDICT WITH YOUR NEIGHBOR BEFORE YOU RUN**
+
+```{r}
+library(tidytext)
+
+dtm <- cheeses |>
+    mutate(id = row_number()) |> 
+    unnest_tokens(word, flavor) |> 
+    anti_join(get_stopwords(), by = "word") |>  
+    count(id, word) |>  
+    bind_tf_idf(word, id, n) |> 
+    cast_dfm(id, word, tf_idf)
+
+dtm
+```
+
+
+## Let's create cheese embeddings 🧀
+
+```{r}
+library(wordsalad)
+
+flavor_embeddings <- 
+    cheeses |>
+    mutate(flavor = str_remove_all(flavor, ",")) |>
+    pull(flavor) |>
+    ___
+
+flavor_embeddings
+```
+
+Let's create an overall average embedding for each cheese (using `mean()`):
+
+```{r}
+tidy_cheeses <-
+    cheeses |>
+    mutate(cheese_id = row_number()) |>
+    ___(word, flavor) |>
+    left_join(flavor_embeddings, by = c("word" = "tokens")) |>
+    ___(cheese_id, cheese, milk, country, type) |>
+    summarize(across(V1:V10, ~ mean(.x, na.rm = TRUE)), .groups = "drop")
+
+tidy_cheeses
+```
+
+## Cheese similarity 🧀
+
+```{r}
+embeddings_mat <- 
+    tidy_cheeses |> 
+    select(V1:V10)  |> 
+    as.matrix()
+
+row.names(embeddings_mat) <- cheeses$cheese
+embeddings_similarity <- embeddings_mat / sqrt(rowSums(embeddings_mat * embeddings_mat))
+embeddings_similarity <- embeddings_similarity %*% t(embeddings_similarity)
+dim(embeddings_similarity)
+```
+
+What are the highest probability words in each topic?
+
+**U N S C R A M B L E**
+
+```{r}
+filter(cheese == "Manchego") |> 
+  
+select(cheese, country, flavor)
+
+cheeses |> 
+```
+
+What are the _most_ similar cheeses to Manchego?
+
+```{r}
+enframe(embeddings_similarity["Manchego",], name = "cheese", value = "similarity") |>
+  arrange(-similarity)
+```
+
+```{r}
+cheeses |> 
+  filter(cheese %in% c("Beemster Classic", "Butternut", "Loma Alta")) |> 
+  select(cheese, country, flavor)
+```
+
+
+```{r}
+cheeses |> 
+  filter(cheese %in% c(___)) |> 
+  select(cheese, country, flavor)
+```
+
+
+What about the _least_ similar cheeses to Manchego?
+
+```{r}
+enframe(embeddings_similarity["Manchego",], name = "cheese", value = "similarity") |>
+  arrange(___)
+```
+
+## Cheesy similarity 🧀
+
+```{r}
+cheeses |> 
+  ___(cheese %in% c("Bossa", "St Cera", "Minger")) |> 
+  select(cheese, country, flavor)
+```

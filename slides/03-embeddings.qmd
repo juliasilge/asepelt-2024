@@ -121,6 +121,7 @@ John Rupert Firth
 ## Cheesy embeddings 🧀
 
 ```{r}
+#| code-line-numbers: "|7"
 library(wordsalad)
 
 flavor_embeddings <- 
@@ -137,6 +138,7 @@ flavor_embeddings
 Let's create an overall embedding for each cheese (using `mean()`):
 
 ```{r}
+#| code-line-numbers: "|4,6"
 tidy_cheeses <-
     cheeses |>
     mutate(cheese_id = row_number()) |>

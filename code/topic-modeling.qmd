@@ -163,7 +163,4 @@ mutate(title = fct_reorder(title, gamma * topic)) |>
 geom_boxplot() +
 ```
 
-
-**GO EXPLORE REAL-WORLD TEXT!**
-
-Thanks for learning with me! <3
+Thanks for joining! <3
