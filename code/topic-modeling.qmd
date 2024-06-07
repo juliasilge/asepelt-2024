@@ -1,0 +1,169 @@
+---
+title: "Text mining with tidy data principles: topic modeling"
+author: "Julia Silge"
+output: html_document
+---
+
+```{r}
+#| include: false
+my_mirror <- "http://mirrors.xmission.com/gutenberg/"
+```
+
+## Download data
+
+First download data to use in modeling:
+
+```{r}
+library(tidyverse)
+library(gutenbergr)
+
+books <- gutenberg_download(c(36, 55, 158, 768),
+                            meta_fields = "title",
+                            mirror = my_mirror)
+books |>
+  count(title)
+```
+
+What do you predict will happen if we run the following code?
+
+**PREDICT WITH YOUR NEIGHBOR BEFORE YOU RUN**
+
+```{r}
+books_by_document <- books |>
+  group_by(title) |>
+  mutate(document = row_number() %/% 500) |>
+  ungroup() |>
+  unite(document, title, document)
+
+books_by_document
+```
+
+Someone has TORN YOUR BOOKS APART!!!
+
+## Let's use topic modeling to put your books back together
+
+As a first step, let's tokenize and tidy these chapters.
+
+```{r}
+library(tidytext)
+
+word_counts <- books_by_document |>
+  ___ |>
+  anti_join(___) |>
+  count(document, word, sort = TRUE)
+
+word_counts
+```
+
+Next, let's **cast** to a sparse matrix. 
+
+How many features and observations do you have?
+
+```{r}
+words_sparse <- word_counts |>
+  ___(document, word, n)
+
+___(words_sparse)
+___(words_sparse)
+```
+
+Train a topic model.
+
+```{r}
+library(stm)
+
+topic_model <- stm(___, K = 4, 
+                   init.type = "Spectral")
+
+summary(topic_model)
+```
+
+## Explore the output of topic modeling
+
+The word-topic probabilities are called the "beta" matrix.
+
+```{r}
+document_topics <- tidy(topic_model, ___)
+
+document_topics
+```
+
+What are the highest probability words in each topic?
+
+**U N S C R A M B L E**
+
+```{r}
+top_terms <- document_topics |>
+
+ungroup() |>
+
+group_by(topic) |>
+
+arrange(topic, -beta)
+
+slice_max(beta, n = 10) |>
+```
+
+Let's build a visualization.
+
+```{r}
+top_terms |>
+  mutate(term = fct_reorder(term, beta)) |>
+  ggplot(___) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(vars(topic), scales = "free")
+```
+
+People who work with topic models have come up with alternate metrics for identifying important words:
+
+- FREX = high frequency *and* high exclusivity
+- lift = topic-word distribution divided by word count distribution
+
+```{r}
+tidy(___, matrix = "frex")
+tidy(___, matrix = "lift")
+```
+
+The document-topic probabilities are called "gamma".
+
+```{r}
+documents_gamma <- tidy(topic_model, ___,
+                        document_names = rownames(words_sparse))
+
+documents_gamma
+```
+
+How well did we do in putting our books back together into the 4 topics?
+
+What do you predict will happen if we run the following code?
+
+**PREDICT WITH YOUR NEIGHBOR BEFORE YOU RUN**
+
+```{r}
+documents_parsed <- document_gamma |>
+  ___(document, c("title", "document"), 
+           sep = "_", convert = TRUE)
+
+documents_parsed
+```
+
+Let's visualize the results.
+
+**U N S C R A M B L E**
+
+```{r}
+documents_parsed |>
+
+ggplot(aes(factor(topic), gamma)) +
+
+facet_wrap(vars(title))
+
+mutate(title = fct_reorder(title, gamma * topic)) |>
+
+geom_boxplot() +
+```
+
+
+**GO EXPLORE REAL-WORLD TEXT!**
+
+Thanks for learning with me! <3
