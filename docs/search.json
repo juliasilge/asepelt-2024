@@ -179,7 +179,7 @@
     "href": "slides/01-tidytext.html#what-is-a-document-about-3",
     "title": "Text Mining",
     "section": "What is a document about?",
-    "text": "What is a document about?\n\nTerm frequency\nInverse document frequency\n\n\nWeighted log odds ⚖️\n\nLog odds ratio expresses probabilities\nWeighting helps deal with power law distribution"
+    "text": "What is a document about?\n\nTerm frequency\nInverse document frequency\n\n\n \nWeighted log odds ⚖️\n\nLog odds ratio expresses probabilities\nWeighting helps deal with power law distribution"
   },
   {
     "objectID": "slides/01-tidytext.html#weighted-log-odds-1",

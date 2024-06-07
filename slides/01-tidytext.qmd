@@ -423,6 +423,9 @@ book_tf_idf |>
 
 . . .
 
+<br>
+<br>
+
 ### Weighted log odds ⚖️
 
 - Log odds ratio expresses probabilities
