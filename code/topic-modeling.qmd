@@ -69,6 +69,8 @@ ___(words_sparse)
 
 Train a topic model.
 
+NOTE: if you are using the free tier on Posit Cloud, there is not enough RAM to train this model. Instead, use `topic_model <- readr::read_rds("topic_model.rds")` to load a model I trained ahead of time for you.
+
 ```{r}
 library(stm)
 
