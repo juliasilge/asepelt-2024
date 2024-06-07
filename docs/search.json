@@ -4,7 +4,7 @@
     "href": "slides/01-tidytext.html#join-our-workspace-on-posit-cloud",
     "title": "Text Mining",
     "section": "Join our workspace on Posit Cloud",
-    "text": "Join our workspace on Posit Cloud\n bit.ly/join-tidytext-tutorial\nOr alternatively, install the packages yourself to work locally:\n\ninstall.packages(c(\"tidyverse\", \n                   \"tidytext\",\n                   \"stopwords\",\n                   \"gutenbergr\",\n                   \"widyr\",\n                   \"tidygraph\",\n                   \"tidylo\",\n                   \"ggraph\"))"
+    "text": "Join our workspace on Posit Cloud\n bit.ly/join-tidytext-tutorial\n  \nOr alternatively, install the packages yourself to work locally:\n\ninstall.packages(c(\"tidyverse\", \n                   \"tidytext\",\n                   \"stopwords\",\n                   \"gutenbergr\",\n                   \"widyr\",\n                   \"tidygraph\",\n                   \"tidylo\",\n                   \"ggraph\"))"
   },
   {
     "objectID": "slides/01-tidytext.html#text-in-the-real-world",

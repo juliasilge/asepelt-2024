@@ -46,6 +46,10 @@ knitr:
 
 [{{< fa cloud >}} bit.ly/join-tidytext-tutorial](https://bit.ly/join-tidytext-tutorial)
 
+<br>
+<br>
+<br>
+
 Or alternatively, install the packages yourself to work locally:
 
 ```{r}
