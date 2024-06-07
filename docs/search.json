@@ -417,7 +417,7 @@
     "href": "index.html#is-this-workshop-for-me",
     "title": "Text Mining with Tidy Data Principles",
     "section": "Is this workshop for me?",
-    "text": "Is this workshop for me?\nThis course will be appropriate for you if you answer yes to these questions:\n\nHave you ever encountered text data and suspected there was useful insight latent within it but felt frustrated about how to find that insight?\nAre you familiar with dplyr and ggplot2, and ready to learn how unstructured text data can be analyzed within the tidyverse ecosystem?\nDo you need a flexible framework for handling text data that allows you to engage in tasks from exploratory data analysis to supervised predictive modeling?"
+    "text": "Is this workshop for me?\nThis course will be appropriate for you if you answer yes to these questions:\n\nHave you ever encountered text data and suspected there was useful insight latent within it but felt frustrated about how to find that insight?\nAre you familiar with dplyr and ggplot2, and ready to learn how unstructured text data can be analyzed within the tidyverse ecosystem?\nDo you need a flexible framework for handling text data that allows you to engage in tasks from exploratory data analysis to finding word embeddings?"
   },
   {
     "objectID": "index.html#learning-objectives",

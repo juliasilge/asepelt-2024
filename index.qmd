@@ -8,7 +8,7 @@ This course will be appropriate for you if you answer yes to these questions:
 
 - Have you ever encountered text data and suspected there was useful insight latent within it but felt frustrated about how to find that insight?
 - Are you familiar with dplyr and ggplot2, and ready to learn how unstructured text data can be analyzed within the [tidyverse](https://www.tidyverse.org/) ecosystem?
-- Do you need a flexible framework for handling text data that allows you to engage in tasks from exploratory data analysis to supervised predictive modeling?
+- Do you need a flexible framework for handling text data that allows you to engage in tasks from exploratory data analysis to finding word embeddings?
 
 
 ## Learning objectives: 
