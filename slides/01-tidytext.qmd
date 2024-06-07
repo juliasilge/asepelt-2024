@@ -42,7 +42,11 @@ knitr:
 
 </center>
 
-## Let's install some packages
+## Join our workspace on Posit Cloud
+
+[{{< fa cloud >}} bit.ly/join-tidytext-tutorial](https://bit.ly/join-tidytext-tutorial)
+
+Or alternatively, install the packages yourself to work locally:
 
 ```{r}
 #| eval: false

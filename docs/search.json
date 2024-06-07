@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "slides/01-tidytext.html#lets-install-some-packages",
-    "href": "slides/01-tidytext.html#lets-install-some-packages",
+    "objectID": "slides/01-tidytext.html#join-our-workspace-on-posit-cloud",
+    "href": "slides/01-tidytext.html#join-our-workspace-on-posit-cloud",
     "title": "Text Mining",
-    "section": "Let’s install some packages",
-    "text": "Let’s install some packages\n\ninstall.packages(c(\"tidyverse\", \n                   \"tidytext\",\n                   \"stopwords\",\n                   \"gutenbergr\",\n                   \"widyr\",\n                   \"tidygraph\",\n                   \"tidylo\",\n                   \"ggraph\"))"
+    "section": "Join our workspace on Posit Cloud",
+    "text": "Join our workspace on Posit Cloud\n bit.ly/join-tidytext-tutorial\nOr alternatively, install the packages yourself to work locally:\n\ninstall.packages(c(\"tidyverse\", \n                   \"tidytext\",\n                   \"stopwords\",\n                   \"gutenbergr\",\n                   \"widyr\",\n                   \"tidygraph\",\n                   \"tidylo\",\n                   \"ggraph\"))"
   },
   {
     "objectID": "slides/01-tidytext.html#text-in-the-real-world",
